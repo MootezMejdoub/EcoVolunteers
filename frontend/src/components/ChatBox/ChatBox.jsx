@@ -5,18 +5,30 @@ import { getUser } from "../../api/UserRequests";
 import "./ChatBox.css";
 import { format } from "timeago.js";
 import InputEmoji from "react-input-emoji";
+import VideoCall from "../testvideocall/testvideocall";
+import soundFile from "../../../src/Instagrameffect.mp3";
 
 const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
   const [userData, setUserData] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-
+  const [modalOpened, setModalOpened] = useState(false);
   const handleChange = (newMessage) => {
     setNewMessage(newMessage);
   };
 
+  const playSound = () => {
+    const audio = new Audio(soundFile);
+    audio.play();
+
+    setTimeout(() => {
+      audio.pause();
+      audio.currentTime = 0;
+    }, 3000);
+  };
   // fetching data for header
   useEffect(() => {
+    console.log(modalOpened);
     const userId = chat?.members?.find((id) => id !== currentUser);
     const getUserData = async () => {
       try {
@@ -75,8 +87,39 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
     console.log("Message Arrived: ", receivedMessage);
     if (receivedMessage !== null && receivedMessage.chatId === chat._id) {
       setMessages([...messages, receivedMessage]);
+
+      const diff = new Date() - new Date(receivedMessage.createdAt);
+      if (
+        receivedMessage.text === "Hey i'm in the Video CAll Room Join Me 📞"
+      ) {
+        console.log("soundplauued");
+        playSound();
+      }
     }
   }, [receivedMessage]);
+
+  const handleCall = async () => {
+    console.log("call");
+
+    const message = {
+      senderId: currentUser,
+      text: `Hey i'm in the Video CAll Room Join Me 📞`,
+
+      chatId: chat._id,
+    };
+    const receiverId = chat.members.find((id) => id !== currentUser);
+    // send message to socket server
+    setSendMessage({ ...message, receiverId });
+
+    // send message to database
+    try {
+      const { data } = await addMessage(message);
+      setMessages([...messages, data]);
+      setNewMessage("");
+    } catch {
+      console.log("error");
+    }
+  };
 
   const scroll = useRef();
   const imageRef = useRef();
@@ -105,6 +148,26 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
                     </span>
                   </div>
                 </div>
+
+                <i
+                  className="fa-solid fa-video  mr-5 "
+                  style={{
+                    color: " #00e6bf",
+                    fontSize: "25px",
+                  }}
+                  onClick={async () => {
+                    await handleCall();
+                    setModalOpened(true);
+                  }}
+                ></i>
+
+                {modalOpened ? (
+                  <VideoCall
+                    modalOpened={modalOpened}
+                    setModalOpened={setModalOpened}
+                    chat={chat?._id}
+                  />
+                ) : null}
               </div>
               <hr
                 style={{
@@ -121,10 +184,25 @@ const ChatBox = ({ chat, currentUser, setSendMessage, receivedMessage }) => {
                   key={index}
                   ref={scroll}
                   className={
-                    message.senderId === currentUser ? "message own" : "message"
+                    message.senderId === currentUser ? "message" : "message own"
                   }
                 >
-                  <span>{message.text}</span>{" "}
+                  {message.text ===
+                  "Hey i'm in the Video CAll Room Join Me 📞" ? (
+                    <span
+                      style={{
+                        color: "red",
+                        fontFamily: "cursive",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setModalOpened(true)}
+                    >
+                      {message.text}
+                    </span>
+                  ) : (
+                    <span>{message.text}</span>
+                  )}
+                  {/* <span>{message.text}</span>{" "} */}
                   <span>{format(message.createdAt)}</span>
                 </div>
               ))}

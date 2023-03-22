@@ -29,7 +29,6 @@ const Chat = () => {
     const getChats = async () => {
       try {
         const { data } = await userChats(auth._id);
-        console.log(auth.id);
 
         console.log(data);
         setChats(data);
@@ -72,7 +71,6 @@ const Chat = () => {
   // Get the message from socket server
   useEffect(() => {
     socket.current.on("recieve-message", (data) => {
-      console.log(data);
       setReceivedMessage(data);
     });
   }, []);
@@ -84,11 +82,10 @@ const Chat = () => {
   };
 
   return (
-    <div className="Chat">
+    <div className="Chat ">
       {/* Left Side */}
-      <div className="Left-side-chat">
-        <LogoSearch />
-        <div className="Chat-container">
+      <div className="Left-side-chat ">
+        <div className="Chat-container mt-3  ">
           <h2>Chats</h2>
           <div className="Chat-list">
             {chats.map((chat, index) => (

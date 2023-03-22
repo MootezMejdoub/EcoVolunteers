@@ -33,6 +33,7 @@ import Profile from "./pages/profile/Profile";
 import EmailVerify from "./pages/EmailVerify";
 import { useSelector } from "react-redux";
 import Chat from "./pages/Chat/Chat";
+import VideoCall from "./components/testvideocall/testvideocall";
 
 function App() {
   const { auth, setAuth, logged, setLogged } = useContext(AuthContext);
@@ -83,6 +84,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/home" element={<Home />} />
                 <Route path="/chat" element={<Chat />} />
+                <Route path="/videcall" element={<VideoCall />} />
 
                 {/* <Route
                   path="/message"

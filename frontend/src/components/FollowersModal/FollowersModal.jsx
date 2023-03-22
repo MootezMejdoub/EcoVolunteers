@@ -1,10 +1,10 @@
 import React from "react";
 import { Modal, useMantineTheme } from "@mantine/core";
- import { useContext } from "react";
+import { useContext } from "react";
 import AuthContext from "./../../context/AuthContext";
 import User from "../User/User";
 import { useState } from "react";
- import "./followermodal.scss";
+import "./followermodal.scss";
 
 const FollowersModal = ({ modalOpened, setModalOpened, data }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -57,7 +57,8 @@ const FollowersModal = ({ modalOpened, setModalOpened, data }) => {
       /> */}
       {filteredData.map((person, id) => (
         <div className="mb-3">
-        <User person={person} key={id} /></div>
+          <User person={person} key={id} />
+        </div>
       ))}
       {/* {data.map((person, id) => {
         if (person._id !== auth._id) return <User person={person} key={id} />;
