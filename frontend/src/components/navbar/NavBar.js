@@ -93,7 +93,7 @@ const NavBar = () => {
                   </Dropdown.Toggle>
 
                   <Dropdown.Menu>
-                    <Dropdown.Item as={Link} to="/profile">
+                    <Dropdown.Item as={Link} to={`/profile/${auth._id}`}>
                       Profile
                     </Dropdown.Item>
                     <Dropdown.Divider />

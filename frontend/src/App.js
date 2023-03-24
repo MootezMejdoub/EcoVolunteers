@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "./components/navbar/NavBar";
 // import Home from "./pages/home/Home";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 
 import Login from "./pages/login/Login";
 import { useContext, useEffect } from "react";
@@ -34,6 +34,7 @@ import EmailVerify from "./pages/EmailVerify";
 import { useSelector } from "react-redux";
 import Chat from "./pages/Chat/Chat";
 import VideoCall from "./components/testvideocall/testvideocall";
+import Homee from "./pages/home/Homee";
 
 function App() {
   const { auth, setAuth, logged, setLogged } = useContext(AuthContext);
@@ -81,8 +82,8 @@ function App() {
             ) : (
               <>
                 {/* // <Route path="/home" element={<Home />} /> */}
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/home" element={<Home />} />
+                <Route path="/profile/:id" element={<Profile />} />
+                <Route path="/home" element={<Homee />} />
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/videcall" element={<VideoCall />} />
 

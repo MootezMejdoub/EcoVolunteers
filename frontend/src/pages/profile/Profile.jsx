@@ -4,15 +4,19 @@ import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import ProfileLeft from "../../components/ProfileLeft/ProfileLeft";
 import RightSide from "../../components/RightSide/RightSide";
 import "./Profile.css";
+import Profilee from "./Profilee";
 const Profile = () => {
   return (
-    <div className="Profile">
-      <ProfileLeft />
-      <div className="Profile-center">
-        <ProfileCard location = 'profilePage'/>
-      <PostSide/>
+    <div>
+      <Profilee></Profilee>
+      <div className="Profile mt-1">
+        <ProfileLeft />
+        <div className="Profile-center">
+          <ProfileCard location="profilePage" />
+          <PostSide />
+        </div>
+        <RightSide />
       </div>
-      <RightSide/>
     </div>
   );
 };

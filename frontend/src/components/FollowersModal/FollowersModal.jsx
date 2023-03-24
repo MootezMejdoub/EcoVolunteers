@@ -1,22 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, useMantineTheme } from "@mantine/core";
 import { useContext } from "react";
 import AuthContext from "./../../context/AuthContext";
 import User from "../User/User";
 import { useState } from "react";
 import "./followermodal.scss";
+import { getAllUser } from "../../api/UserRequests";
 
 const FollowersModal = ({ modalOpened, setModalOpened, data }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [persons, setPersons] = useState([]);
 
   function toggleSearchBar() {
     setIsOpen(!isOpen);
   }
-
+  useEffect(() => {
+    const fetchPersons = async () => {
+      const { data } = await getAllUser();
+      setPersons(data);
+    };
+    fetchPersons();
+  });
   const theme = useMantineTheme();
   const { auth } = useContext(AuthContext);
   const [searchQuery, setSearchQuery] = useState("");
-  const filteredData = data.filter(
+  const filteredData = persons.filter(
     (person) =>
       person._id !== auth._id &&
       person.username?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -56,7 +64,7 @@ const FollowersModal = ({ modalOpened, setModalOpened, data }) => {
         onChange={(event) => setSearchQuery(event.target.value)}
       /> */}
       {filteredData.map((person, id) => (
-        <div className="mb-3">
+        <div className="mb-3" key={id}>
           <User person={person} key={id} />
         </div>
       ))}

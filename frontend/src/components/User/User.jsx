@@ -15,7 +15,7 @@ const User = ({ person }) => {
   const [following, setFollowing] = useState(
     person.followers.includes(auth._id)
   );
-  console.log(following);
+
   const handleFollow = () => {
     !following
       ? UserApi.followUser(person._id, auth) &&

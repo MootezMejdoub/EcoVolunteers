@@ -9,7 +9,7 @@ import { useContext } from "react";
 
 const ProfileCard = ({ location }) => {
   const posts = useSelector((state) => state.postReducer.posts);
-  
+
   const serverPublic = process.env.REACT_APP_PUBLIC_FOLDER;
   const { auth } = useContext(AuthContext);
   const [followersNumber, setFollowersNumber] = useState(0);
@@ -19,7 +19,7 @@ const ProfileCard = ({ location }) => {
     setFollowingNumber(auth.following?.length);
   }, [auth]);
   return (
-    <div className="ProfileCard">
+    <div className="ProfileCard mt-2">
       <div className="followStatus">
         <hr />
         <div>

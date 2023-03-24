@@ -20,8 +20,8 @@ const FollowersCard = ({ location }) => {
   }, []);
 
   return (
-    <div className="FollowersCard   ">
-      <h3>People you may know</h3>
+    <div className="FollowersCard   " style={{ overflow: "auto" }}>
+      <h5 style={{ color: "grey" }}>Suggestions For You</h5>
 
       {persons.map((person, id) => {
         if (person._id !== auth._id) return <User person={person} key={id} />;

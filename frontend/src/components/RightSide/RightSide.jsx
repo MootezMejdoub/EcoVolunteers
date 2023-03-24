@@ -8,10 +8,9 @@ const RightSide = () => {
   const [modalOpened, setModalOpened] = useState(false);
 
   return (
-    <div className="RightSide">
+    <div className="RightSide mt-2">
       {/* Side Navbar */}
 
-      <NavIcons />
       {/* TrendCard */}
       <TrendCard />
 
