@@ -27,11 +27,11 @@ import ForgetP from "./pages/forgotpassword/ForgetP";
 import ResetP from "./pages/forgotpassword/ResetPassword";
 import Mini from "./pages/local/Mini";
 import { FaceDetection } from "face-api.js";
-import ChatLive from "./components/chat/chat";
+import ChatLive from "./components/chat/LiveChat";
 import io from "socket.io-client";
 import Profile from "./pages/profile/Profile";
 import EmailVerify from "./pages/EmailVerify";
-import { useSelector } from "react-redux";
+
 import Chat from "./pages/Chat/Chat";
 import VideoCall from "./components/testvideocall/testvideocall";
 import Homee from "./pages/home/Homee";
