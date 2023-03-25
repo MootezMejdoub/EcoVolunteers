@@ -96,7 +96,9 @@ const LiveChat = ({ socket, user }) => {
             event.key === "Enter" && sendMessage();
           }}
         />
-        <button onClick={sendMessage}>&#9658;</button>
+        <button className="button" onClick={sendMessage}>
+          Send
+        </button>
       </div>
     </div>
   );

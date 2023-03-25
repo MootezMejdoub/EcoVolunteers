@@ -8,16 +8,20 @@ import AuthContext from "../../context/AuthContext";
 const RightBar = () => {
   useEffect(() => {});
 
-  const socket = io("ws://localhost:8800"); // connect to the server
-  const { auth, setAuth, logged, setLogged } = useContext(AuthContext);
+  // const socket = io("ws://localhost:8800"); // connect to the server
+
+  const { auth, setAuth, logged, setLogged, socket } = useContext(AuthContext);
   return (
     <div className="rightBar">
       <div className="container">
         <div className="item">
           <FollowersCard />
         </div>
-        <div className="item">
-          <ChatLive className="ChatLive" socket={socket} user={auth} />
+
+        <div className="cardBox">
+          <div className="card">
+            <ChatLive className="ChatLive" socket={socket} user={auth} />
+          </div>
         </div>
       </div>
     </div>

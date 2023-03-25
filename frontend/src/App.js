@@ -37,12 +37,13 @@ import VideoCall from "./components/testvideocall/testvideocall";
 import Homee from "./pages/home/Homee";
 
 function App() {
-  const { auth, setAuth, logged, setLogged } = useContext(AuthContext);
+  const { auth, setAuth, logged, setLogged, socket, setSocket } =
+    useContext(AuthContext);
   //const socket = io("http://localhost:5000"); // connect to the server
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
+    setSocket(io("ws://localhost:8800"));
     if (!token) {
       return;
     } else {

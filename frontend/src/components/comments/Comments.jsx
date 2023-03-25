@@ -1,49 +1,61 @@
-import { useContext } from 'react';
-import './comments.scss';
-import AuthContext from '../../context/AuthContext';
-import SendIcon from '@mui/icons-material/Send';
-import { Button } from '@mui/material';
-
-const Comments = () => {
+import { useContext, useRef } from "react";
+import "./comments.scss";
+import AuthContext from "../../context/AuthContext";
+import SendIcon from "@mui/icons-material/Send";
+import { Button } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { getComment } from "../../api/comments";
+import Comment from "../comment/comment";
+const Comments = ({ comments, post, setComments }) => {
   const { auth } = useContext(AuthContext);
-  //Temporary
-  const comments = [
-    {
-      id: 1,
-      desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam',
-      name: 'John Doe',
-      userId: 1,
-      profilePicture:
-        'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
-    },
-    {
-      id: 2,
-      desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam',
-      name: 'Jane Doe',
-      userId: 2,
-      profilePicture:
-        'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600',
-    },
-  ];
+  const [comment, setComment] = useState("");
+  const description = useRef();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (comment !== "") {
+      const commentData = {
+        description: comment,
+        userId: auth._id,
+      };
+
+      try {
+        const response = await axios.post(
+          `http://localhost:5000/comments/comments/${post._id}`,
+          commentData
+        );
+        console.log(response.data); // the created comment object
+        const newComments = [...comments, response.data];
+        setComments(newComments);
+        description.current.value = "";
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <div className="comments">
       <div className="write">
         <img src={`http://localhost:5000/uploads/${auth.img}`} alt="" />
-        <input type="text" placeholder="write a comment" />
-        <Button variant="contained" endIcon={<SendIcon />}>
+        <input
+          type="text"
+          ref={description}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="write a comment"
+        />
+        <Button
+          variant="contained"
+          endIcon={<SendIcon />}
+          onClick={handleSubmit}
+        >
           Send
         </Button>
       </div>
-      {comments.map((comment) => (
-        <div className="comment" key={comment.id}>
-          <img src={comment.profilePicture} alt="" />
-          <div className="info">
-            <span>{comment.name}</span>
-            <p>{comment.desc}</p>
-          </div>
-          <span className="date">1 hour ago</span>
-        </div>
-      ))}
+      {comments.map((comment, id) => {
+        return <Comment data={comment} user={comment.userId} key={id} />;
+      })}
     </div>
   );
 };

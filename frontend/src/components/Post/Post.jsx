@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import Comments from "../comments/Comments";
 import { format } from "timeago.js";
 import { getUser } from "../../api/UserRequests";
+import axios from "axios";
 
 const Post = ({ data }) => {
   const { auth, setAuth } = useContext(AuthContext);
@@ -50,55 +51,20 @@ const Post = ({ data }) => {
     };
     getUserData();
   }, [data]);
-  return (
-    // <div className="Post">
-    //   <img
-    //     src={data.image ? process.env.REACT_APP_PUBLIC_FOLDER + data.image : ""}
-    //     alt=""
-    //     onClick={() => setModalOpened(true)}
-    //   />
-    //   <Modal
-    //     overlayColor={
-    //       theme.colorScheme === "dark"
-    //         ? theme.colors.dark[9]
-    //         : theme.colors.gray[2]
-    //     }
-    //     opened={modalOpened}
-    //     onClose={() => setModalOpened(false)}
-    //     overlayOpacity={0.55}
-    //     overlayBlur={3}
-    //     size="55%"
-    //   >
-    //     <img
-    //       src={
-    //         data.image ? process.env.REACT_APP_PUBLIC_FOLDER + data.image : ""
-    //       }
-    //       className="d-block w-100"
-    //       alt="..."
-    //     />
-    //   </Modal>
+  const [comments, setComments] = useState([]);
 
-    //   <div className="postReact">
-    //     <img
-    //       src={liked ? Heart : NotLike}
-    //       alt=""
-    //       style={{ cursor: "pointer" }}
-    //       onClick={handleLike}
-    //     />
-    //     <img src={Comment} alt="" />
-    //     <img src={Share} alt="" />
-    //   </div>
-    //   <span style={{ color: "var(--gray)", fontSize: "12px" }}>
-    //     {likes} likes
-    //   </span>
-    //   <div className="detail">
-    //     <span>
-    //       <b>{data.name} </b>
-    //     </span>
-    //     <span>{data.desc}</span>
-    //   </div>
-    //   <div></div>
-    // </div>
+  useEffect(() => {
+    const getComments = async () => {
+      await axios
+        .get(`http://localhost:5000/comments/comments/${data._id}`)
+        .then(({ data }) => {
+          setComments(data);
+        })
+        .catch((err) => console.error(err));
+    };
+    getComments();
+  }, [data]);
+  return (
     <div className="post">
       <div className="container">
         <div className="user">
@@ -170,14 +136,16 @@ const Post = ({ data }) => {
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
-            12 Comments
+            {comments.length} Comments
           </div>
           <div className="item">
             <ShareOutlinedIcon />
             Share
           </div>
         </div>
-        {commentOpen && <Comments />}
+        {commentOpen && (
+          <Comments post={data} comments={comments} setComments={setComments} />
+        )}
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ const UserRouter = require("./routes/UserRoute");
 const PostRoute = require("./routes/PostRoute");
 const ChatRoute = require("./routes/ChatRoute");
 const MessageRoute = require("./routes/MessageRoute");
+const CommentsRoute = require("./routes/CommentsRoute");
 const UploadRoute = require("./routes/UploadRoute");
 const localisationRouter = require("./routes/localisation");
 
@@ -42,6 +43,7 @@ app.use("/posts", PostRoute);
 app.use("/upload", UploadRoute);
 app.use("/chat", ChatRoute);
 app.use("/message", MessageRoute);
+app.use("/comments", CommentsRoute);
 
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
