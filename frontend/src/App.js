@@ -35,6 +35,7 @@ import EmailVerify from "./pages/EmailVerify";
 import Chat from "./pages/Chat/Chat";
 import VideoCall from "./components/testvideocall/testvideocall";
 import Homee from "./pages/home/Homee";
+import Donation from "./components/Donation/Donation";
 
 function App() {
   const { auth, setAuth, logged, setLogged, socket, setSocket } =
@@ -87,6 +88,7 @@ function App() {
                 <Route path="/home" element={<Homee />} />
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/videcall" element={<VideoCall />} />
+                <Route path="/donate" element={<Donation />} />
 
                 {/* <Route
                   path="/message"

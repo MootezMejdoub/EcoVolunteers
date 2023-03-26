@@ -39,8 +39,10 @@ const LeftBar = () => {
             <span>Clubs</span>
           </div>
           <div className="item">
-            <img src={Memories} alt="" />
-            <span>Memories</span>
+            <NavLink className="user" to={`/donate`}>
+              <img src={Fund} alt="" />
+              <span>Donation</span>
+            </NavLink>
           </div>
         </div>
         <hr />
@@ -66,10 +68,7 @@ const LeftBar = () => {
         <hr />
         <div className="menu">
           <span>Others</span>
-          <div className="item">
-            <img src={Fund} alt="" />
-            <span>Fundraiser</span>
-          </div>
+
           <div className="item">
             <img src={Tutorials} alt="" />
             <span>Tutorials</span>
