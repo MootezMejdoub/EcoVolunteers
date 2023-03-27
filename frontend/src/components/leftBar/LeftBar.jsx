@@ -41,7 +41,7 @@ const LeftBar = () => {
           <div className="item">
             <NavLink className="user" to={`/donate`}>
               <img src={Fund} alt="" />
-              <span>Donation</span>
+              <span>Fundraiser</span>
             </NavLink>
           </div>
         </div>
