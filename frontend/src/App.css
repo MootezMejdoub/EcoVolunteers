@@ -161,3 +161,6 @@ body {
 .joinChatContainer button:hover {
   background: #2e7d32;
 }
+html {
+  scroll-behavior: smooth;
+}
